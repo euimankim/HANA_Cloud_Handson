@@ -10,13 +10,13 @@ CREATE COLUMN TABLE travel.room (
   PRIMARY KEY (hno, type)
 );
 
-CREATE COLUMN TABLE city ( 
+CREATE COLUMN TABLE travel.city ( 
   zip VARCHAR(5) PRIMARY KEY,
   name VARCHAR(30) NOT NULL,
   state VARCHAR(2) NOT NULL
 );
 
-CREATE COLUMN TABLE hotel (
+CREATE COLUMN TABLE travel.hotel (
   hno INTEGER PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
   zip VARCHAR(5),
