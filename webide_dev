@@ -10,4 +10,112 @@ GRANT "travel::external_access_g", "travel::external_access" TO travel_grantor W
 GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access_g" WITH GRANT OPTION;
 GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access";
 
+3. Create user-provided service instance : travel-schema
 
+{
+  "user": "travel_grantor",
+  "password": "<password>",
+  "schema": "TRAVEL",
+  "tags": ["hana"]
+}
+
+4. Create project : Web IDE
+
+- New Project from Template
+- SAP HANA Database Application
+- Project Name : travel
+- SAP HANA Database Version : SAP HANA Cloud
+
+5. mta.yaml
+
+modules:
+ - name: db
+   type: hdb
+   path: db
+   requires:
+    - name: travel-hdi
+      properties:
+        TARGET_CONTAINER: '~{hdi-container-name}'
+    - name: travel-schema
+ 
+resources:
+ - name: travel-hdi
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
+ - name: travel-schema
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service-name: travel-schema
+
+6. travel.hdbgrants
+
+{
+    "travel-schema": {
+        "object_owner": {
+            "roles": [
+                "travel::external_access_g"
+            ]
+        },
+        "application_user": {
+            "roles": [
+                "travel::external_access"
+            ]
+        }
+    }
+}
+
+7. travel.hdbsynonym
+
+{
+    "travel.db::room": {
+        "target": {
+            "object": "ROOM",
+            "schema": "TRAVEL"
+        }
+    },
+    "travel.db::city": {
+        "target": {
+            "object": "CITY",
+            "schema": "TRAVEL"
+        }
+    },
+    "travel.db::hotel": {
+        "target": {
+            "object": "HOTEL",
+            "schema": "TRAVEL"
+        }
+    }
+}
+
+8. analytics.hdbrole
+
+{
+    "role": {
+        "name": "travel.db::analytics",
+        "schema_privileges": [
+            {
+                "privileges": [
+                    "SELECT"
+                ]
+            }
+        ]
+    }
+}
+
+9. Project Build & Deploy
+
+- travel-hdi create
+- db application create
+
+10. Grant priviledge : DBADMIN
+
+GRANT "<hdi-schema>"."travel.db::analytics" TO enduser;
+
+11. SAC Live Connection
+
+- https://sactrial-saceu10-scccwo3toqu9y2wxjlytmjc3.eu10.hanacloudservices.cloud.sap
+- 31cb4111-e40b-40bb-b62f-e0aa85b57b5a.hana.trial-us10.hanacloud.ondemand.com
+- SAP HANA CLOUD
+
+12. Create Model & Story
