@@ -1,0 +1,30 @@
+drop type OZONE_FORECAST_OUT_T;
+create type OZONE_FORECAST_OUT_T as table (
+    OBSERVE_DATE DATE,
+    RATE DOUBLE,
+    kts_1 DOUBLE,
+    "kts_1_lowerlimit_95%" DOUBLE,
+    "kts_1_upperlimit_95%" DOUBLE
+);
+
+create column table FUNC_HEADER like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.FUNCTION_HEADER";
+insert into FUNC_HEADER values ('Oid', '#42');
+insert into FUNC_HEADER values ('LogLevel', '8');
+
+create view OZONE_RATE_SORTED as select OBSERVE_DATE, RATE from OZONERATE order by OBSERVE_DATE asc;
+
+create column table FORECAST_CONFIG like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.OPERATION_CONFIG_EXTENDED";
+insert into FORECAST_CONFIG values ('APL/Horizon', '12',null);
+insert into FORECAST_CONFIG values ('APL/TimePointColumnName', 'OBSERVE_DATE',null);
+insert into FORECAST_CONFIG values ('APL/ForcePositiveForecast', 'true',null);
+insert into FORECAST_CONFIG values ('APL/ApplyExtraMode','Forecasts and Error Bars', null);
+
+create column table VARIABLE_DESC like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.VARIABLE_DESC_OID";
+
+create column table VARIABLE_ROLES like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.VARIABLE_ROLES_WITH_COMPOSITES_OID";
+insert into VARIABLE_ROLES values ('OBSERVE_DATE', 'input',NULL,NULL,'#42');
+insert into VARIABLE_ROLES values ('RATE', 'target',NULL,NULL,'#42');
+
+create column table FORECAST_OUT like OZONE_FORECAST_OUT_T;
+
+call "SAP_PA_APL"."sap.pa.apl.base::FORECAST"(FUNC_HEADER, FORECAST_CONFIG, VARIABLE_DESC, VARIABLE_ROLES, 'TESTUSER', 'OZONE_RATE_SORTED', 'TESTUSER', 'FORECAST_OUT', ?, ?, ?);
