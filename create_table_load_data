@@ -61,3 +61,15 @@ INSERT INTO travel.hotel VALUES (120, 'Calypso', '90804', '35 Broadway');
 INSERT INTO travel.hotel VALUES (130, 'Evening Star', '90029', '13 Beechwood Place');
 INSERT INTO travel.hotel VALUES (140, 'Steamboat Louis Armstrong', '70112', '788 Main St.');
 
+3. Create view script : DEVUSER
+
+CREATE VIEW travel.budgetrooms AS 
+    SELECT c.state, c.name AS city, h.name AS hotel, r.type, r.free, r.price
+      FROM travel.room r
+      INNER JOIN travel.hotel h ON h.hno = r.hno
+      INNER JOIN travel.city c ON c.zip = h.zip
+      WHERE r.price <= 100;
+
+4. Grant script : DEVUSER
+
+GRANT SELECT ON SCHEMA travel TO enduser;
