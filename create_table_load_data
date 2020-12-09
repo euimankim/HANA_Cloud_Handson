@@ -1,4 +1,4 @@
-1. Create table script
+1. Create table script : DEVUSER
 
 CREATE SCHEMA travel;
 
@@ -23,7 +23,7 @@ CREATE COLUMN TABLE hotel (
   address VARCHAR(40) NOT NULL
 );
 
-2. Load data script
+2. Load data script : DEVUSER
 
 INSERT INTO travel.room VALUES (10, 'single', 20, 135.00);
 INSERT INTO travel.room VALUES (10, 'double', 45, 200.00);
