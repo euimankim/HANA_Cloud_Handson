@@ -1,0 +1,4 @@
+1. Grant Privilidge : DBADMIN
+
+GRANT AFL__SYS_AFL_AFLPAL_EXECUTE to devuser;
+GRANT "sap.pa.apl.base.roles::APL_EXECUTE" to devuser;
