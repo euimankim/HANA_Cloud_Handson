@@ -1,16 +1,16 @@
-1. Create and grant role : DBADMIN
+1. Create and grant role : DBADMIN : 적용 완료
 
---CREATE USER travel_grantor PASSWORD <password> NO FORCE_FIRST_PASSWORD_CHANGE SET USERGROUP DEFAULT;
---CREATE ROLE "travel::external_access_g";
---CREATE ROLE "travel::external_access";
---GRANT "travel::external_access_g", "travel::external_access" TO travel_grantor WITH ADMIN OPTION;
+CREATE USER travel_grantor PASSWORD <password> NO FORCE_FIRST_PASSWORD_CHANGE SET USERGROUP DEFAULT;
+CREATE ROLE "travel::external_access_g";
+CREATE ROLE "travel::external_access";
+GRANT "travel::external_access_g", "travel::external_access" TO travel_grantor WITH ADMIN OPTION;
 
-2. Grant priviledge : DEVUSER
+2. Grant priviledge : DEVUSER : 적용 완료
 
---GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access_g" WITH GRANT OPTION;
---GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access";
+GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access_g" WITH GRANT OPTION;
+GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access";
 
-3. Create user-provided service instance : travel-schema
+3. Create user-provided service instance : travel-schema : 생성 완료
 
 {
   "user": "travel_grantor",
@@ -19,14 +19,14 @@
   "tags": ["hana"]
 }
 
-4. Create project : Web IDE
+4. Create project : Web IDE : 생성 완료
 
 - New Project from Template
 - SAP HANA Database Application
 - Project Name : travel
 - SAP HANA Database Version : SAP HANA Cloud
 
-5. mta.yaml
+5. mta.yaml : 적용 완료
 
 modules:
  - name: db
