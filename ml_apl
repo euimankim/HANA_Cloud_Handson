@@ -10,7 +10,11 @@ create column table FUNC_HEADER like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.FUNCT
 insert into FUNC_HEADER values ('Oid', '#42');
 insert into FUNC_HEADER values ('LogLevel', '8');
 
-create view OZONE_RATE_SORTED as select OBSERVE_DATE, RATE from OZONERATE order by OBSERVE_DATE asc;
+create view OZONE_RATE_SORTED 
+as 
+select OBSERVE_DATE, RATE 
+from OZONERATE 
+order by OBSERVE_DATE asc;
 
 create column table FORECAST_CONFIG like "SAP_PA_APL"."sap.pa.apl.base::BASE.T.OPERATION_CONFIG_EXTENDED";
 insert into FORECAST_CONFIG values ('APL/Horizon', '12',null);
