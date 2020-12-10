@@ -1,14 +1,14 @@
 1. Create and grant role : DBADMIN
 
-CREATE USER travel_grantor PASSWORD <password> NO FORCE_FIRST_PASSWORD_CHANGE SET USERGROUP DEFAULT;
-CREATE ROLE "travel::external_access_g";
-CREATE ROLE "travel::external_access";
-GRANT "travel::external_access_g", "travel::external_access" TO travel_grantor WITH ADMIN OPTION;
+--CREATE USER travel_grantor PASSWORD <password> NO FORCE_FIRST_PASSWORD_CHANGE SET USERGROUP DEFAULT;
+--CREATE ROLE "travel::external_access_g";
+--CREATE ROLE "travel::external_access";
+--GRANT "travel::external_access_g", "travel::external_access" TO travel_grantor WITH ADMIN OPTION;
 
 2. Grant priviledge : DEVUSER
 
-GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access_g" WITH GRANT OPTION;
-GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access";
+--GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access_g" WITH GRANT OPTION;
+--GRANT SELECT, SELECT METADATA ON SCHEMA travel TO "travel::external_access";
 
 3. Create user-provided service instance : travel-schema
 
