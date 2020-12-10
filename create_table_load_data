@@ -1,6 +1,6 @@
 1. Create table script : DEVUSER
 
-CREATE SCHEMA travel;
+--CREATE SCHEMA travel;
 
 CREATE COLUMN TABLE travel.room (
   hno INTEGER,
